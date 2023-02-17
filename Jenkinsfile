@@ -27,5 +27,21 @@ agent any
 	   }
 	  }
 	 }
+
+	stage('Subir Imagen App') {
+	 environment {
+	  registryCredential = 'dockerhub_curso'
+	  }
+
+	 steps {
+	   dir('aplicacion') {
+            script {
+		docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+		  dockerImage1.push("devops")
+}
+}
+}
+}
+	 }
 	}	
 }

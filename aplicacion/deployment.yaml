@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: [nombre_del_proyecto]
+  name: aplicacion
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: [nombre_del_proyecto]
+      app: aplicacion 
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -15,27 +15,27 @@ spec:
   template:
     metadata:
       labels:
-        app: [nombre_del_proyecto]
-        role: [nombre_del_proyecto]
+        app: aplicacion
+        role: aplicacion
     spec:
       containers:
-        - name: [nombre_del_proyecto]
-          image: [repositorio/imagen:tag]
+        - name: aplicacion
+          image: carlarodriguezag/app:devops
           imagePullPolicy: Always
           ports:
             - containerPort: 80
-              name: [nombre_del_proyecto]
+              name: aplicacion
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: [nombre_del_proyecto]
+  name: aplicacion
   labels:
-    app: [nombre_del_proyecto]
+    app: aplicacion
 spec:
   selector:
-   app: [nombre_del_proyecto]
+   app: aplicacion
   type: ClusterIP
   ports:
    - name: http
@@ -43,4 +43,4 @@ spec:
      protocol: TCP
      targetPort: 80
   selector:
-    role: [nombre_del_proyecto]
+    role: aplicacion

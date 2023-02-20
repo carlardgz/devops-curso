@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: [nombre_del_proyecto]
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: [nombre_del_proyecto]
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: [nombre_del_proyecto]
+        role: [nombre_del_proyecto]
+    spec:
+      containers:
+        - name: [nombre_del_proyecto]
+          image: [repositorio/imagen:tag]
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: [nombre_del_proyecto]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: [nombre_del_proyecto]
+  labels:
+    app: [nombre_del_proyecto]
+spec:
+  selector:
+   app: [nombre_del_proyecto]
+  type: ClusterIP
+  ports:
+   - name: http
+     port: 80
+     protocol: TCP
+     targetPort: 80
+  selector:
+    role: [nombre_del_proyecto]

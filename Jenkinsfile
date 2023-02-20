@@ -2,9 +2,11 @@ pipeline {
 	environment{
 		dockerImageName1 = "carlarodriguezag/curso:devops"
 		dockerImage1 = ""
+		dockerImageName2 = "carlarodriguezag/curso:devops"
+		dockerImage2 = ""
 	}
 
-agent any
+ agent any
 
 	stages {
 	 stage('Revisar Código'){
@@ -12,6 +14,12 @@ agent any
 	   dir('aplicacion'){
 	    script {
 	     dockerImage1 = docker.build dockerImageName1
+	    }
+ 	   }
+
+	   dir('Phpmyadmin'){
+	    script {
+	     dockerImage2 = docker.build dockerImageName2
 	    }
  	   }		
 	  }
@@ -25,23 +33,42 @@ agent any
 	     dockerImage1 = docker.build dockerImageName1
 	    }
 	   }
-	  }
-	 }
 
-	stage('Subir Imagen App') {
-	 environment {
-	  registryCredential = 'dockerhub_curso'
+	    dir('Phpmyadmin'){
+	    script {
+	     dockerImage2 = docker.build dockerImageName2
+	    }
+	   }
 	  }
+	 } 
 
-	 steps {
-	   dir('aplicacion') {
-            script {
-		docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-		  dockerImage1.push("devops")
-}
-}
-}
-}
-	 }
-	}	
+	 stage('Subir Imagen App') {
+	  environment {
+	   registryCredential = 'dockerhub_curso'
+	   }
+	  steps {
+		dir('aplicacion') {
+		 script {
+			docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+			dockerImage1.push("devops")
+			 }
+			}
+
+		 dir('Phpmyadmin') {
+		 script {
+			docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+			dockerImage2.push("devops")
+			 }
+			}
+		  }
+	    }
+      }
+
+
+
+
+
+
+
+	}
 }

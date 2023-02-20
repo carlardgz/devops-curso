@@ -86,7 +86,7 @@ pipeline {
 	    }
       }
 
-	
+	  }
 
 		stage('Correr POD') {
 		 steps{
@@ -106,7 +106,6 @@ pipeline {
 
 
 	}
-}
 }
 }
 }

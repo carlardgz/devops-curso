@@ -4,6 +4,8 @@ pipeline {
 		dockerImage1 = ""
 		dockerImageName2 = "carlarodriguezag/phpmyadmin:devops"
 		dockerImage2 = ""
+		dockerImageName3 = "carlarodriguezag/mysql:devops"
+		dockerImage3 = ""
 	}
 
  agent any
@@ -21,7 +23,13 @@ pipeline {
 	    script {
 	     dockerImage2 = docker.build dockerImageName2
 	    }
- 	   }		
+ 	   }
+
+	   dir('Mysql'){
+	    script {
+	     dockerImage3 = docker.build dockerImageName3
+	    }
+ 	   }			
 	  }
 	 }
 
@@ -37,6 +45,12 @@ pipeline {
 	    dir('Phpmyadmin'){
 	    script {
 	     dockerImage2 = docker.build dockerImageName2
+	    }
+	   }
+
+	    dir('Mysql'){
+	    script {
+	     dockerImage3 = docker.build dockerImageName3
 	    }
 	   }
 	  }
@@ -58,6 +72,14 @@ pipeline {
 		 script {
 			docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
 			dockerImage2.push("devops")
+			 }
+			}
+
+		 
+		 dir('Mysql') {
+		 script {
+			docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+			dockerImage3.push("devops")
 			 }
 			}
 		  }

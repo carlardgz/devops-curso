@@ -42,7 +42,7 @@ pipeline {
 	  }
 	 } 
 
-	 stage('Subir Imagen App') {
+	 stage('Subir Imagen') {
 	  environment {
 	   registryCredential = 'dockerhub_curso'
 	   }

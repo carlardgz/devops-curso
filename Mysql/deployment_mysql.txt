@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: [nombre del secreto]
+type: Opaque
+data:
+  ROOT_PASSWORD: [crea una contraseña secreta]
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: [nombre del volumen]
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: [nombre del pod]
+  labels:
+    app: [nombre del pod]
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: [nombre del pod]
+  template:
+    metadata:
+      labels:
+        app: [nombre del pod]
+    spec:
+      containers:
+        - name: [nombre del pod]
+          image: mysql:5.7
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - mountPath: "/var/lib/mysql"
+              subPath: "mysql"
+              name: [nombre del volumen]
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: [nombre del secreto]
+                  key: ROOT_PASSWORD
+      volumes:
+        - name: [nombre del volumen]
+          persistentVolumeClaim:
+            claimName: [nombre del volumen]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: [nombre para el servicio]
+spec:
+  selector:
+    app: [nombre para el servicio]
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306

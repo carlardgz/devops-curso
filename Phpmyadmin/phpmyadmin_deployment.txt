@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: [nombre-de-mi-app]
-          image: [username/imagen:tag]
+          image: 
           imagePullPolicy: Always
           ports:
             - containerPort: 80

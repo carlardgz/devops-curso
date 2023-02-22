@@ -2,33 +2,17 @@ pipeline {
 	environment{
 		dockerImageName1 = "carlarodriguezag/app:devops"
 		dockerImage1 = ""
-		dockerImageName2 = "carlarodriguezag/phpmyadmin:devops"
-		dockerImage2 = ""
-		dockerImageName3 = "carlarodriguezag/mysql:devops"
-		dockerImage3 = ""
+		dockerImageName1 = "carlarodriguezag/phpmyadmin:devops"
+		dockerImage1 = ""
 	}
 
  	agent any
 
 	stages {
 		stage('Revisar Código'){
-	  		steps{
-	   			dir('aplicacion'){
-	    			script {
-	     				dockerImage1 = docker.build dockerImageName1
-	    			}
- 	  			}
-	   			dir('Phpmyadmin'){
-	    			script {
-	     				dockerImage2 = docker.build dockerImageName2
-	    			}
- 	   			}
-	   			dir('Mysql'){
-	    			script {
-	     				dockerImage3 = docker.build dockerImageName3
-	    			}
- 	   			}			
-	  		}
+	  		  steps {
+                git credentialsId: 'dockerhub_curso' , url: 'https://github.com/carlardgz/devops-curso.git', branch: 'main'
+            }
 	 	}
 
 
@@ -46,11 +30,6 @@ pipeline {
 	    			}
 	   			}
 
-	    		dir('Mysql'){
-	    			script {
-	     				dockerImage3 = docker.build dockerImageName3
-	    			}
-	   			}
 	  		}
 	 	} 
 
@@ -73,14 +52,6 @@ pipeline {
 			 			}
 					}
 				}
-		 
-		 		dir('Mysql') {
-		 			script {
-						docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-							dockerImage3.push("devops")
-			 			}
-					}
-		 	 	}
 	    	}
       	}
 	  

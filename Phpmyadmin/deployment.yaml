@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aplicacioncurso
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+  namespace: aplicacioncurso
+type: Opaque
+data:
+  ROOT_PASSWORD: mysecret
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmincursodeploy
+  namespace: aplicacioncurso
+  labels:
+    app: phpmyadmincursodeploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmincursodeploy
+  template:
+    metadata:
+      labels:
+        app: phpmyadmincursodeploy
+    spec:
+      containers:
+        - name: phpmyadmincursodeploy
+          image: carlarodriguezag/phpmyadmin:devops
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: PMA_HOST
+              value: mysqlcursoservice
+            - name: PMA_PORT
+              value: "3306"
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: ROOT_PASSWORD
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmincursoservice
+  namespace: aplicacioncurso
+spec:
+  type: ClusterIP
+  selector:
+    app: phpmyadmincursoservice
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

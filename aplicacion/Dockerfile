@@ -1,6 +1,6 @@
 #Aplicacion prueba
 FROM php:8.1-apache
-COPY ./aplicacion /var/www/html/
+COPY . /var/www/html/
 
 #Simplesaml
 RUN mkdir -p /var/www/simplesaml

@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: [nombre del namespace]
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: [nombre-de-mi-llave-secreta]
+  namespace: [nombre del namespace]
+type: Opaque
+data:
+  ROOT_PASSWORD: [mi-llave-secreta]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: [nombre-de-deployment]
+  namespace: [nombre del namespace]
+  labels:
+    app: [nombre-de-mi-app]
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: [nombre-de-mi-app]
+  template:
+    metadata:
+      labels:
+        app: [nombre-de-mi-app]
+    spec:
+      containers:
+        - name: [nombre-de-mi-app]
+          image: [username/imagen:tag]
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: PMA_HOST
+              value: [nombre-de-mi-servicio-de-mysql]
+            - name: PMA_PORT
+              value: "3306"
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: [nombre-de-mi-llave-secreta]
+                  key: ROOT_PASSWORD
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: [nombre-de-mi-servicio]
+  namespace: [nombre del namespace]
+spec:
+  type: ClusterIP
+  selector:
+    app: [nombre-de-mi-app]
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

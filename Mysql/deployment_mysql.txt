@@ -1,8 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: [nombre del namespace]
+
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: [nombre del secreto]
+  namespace: [nombre del namespace]
 type: Opaque
 data:
   ROOT_PASSWORD: [crea una contraseña secreta]
@@ -13,6 +19,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: [nombre del volumen]
+  namespace: [nombre del namespace]
 spec:
   accessModes:
     - ReadWriteOnce
@@ -25,6 +32,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: [nombre del pod]
+  namespace: [nombre del namespace]
   labels:
     app: [nombre del pod]
 spec:
@@ -62,6 +70,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: [nombre para el servicio]
+  namespace: [nombre del namespace]
 spec:
   selector:
     app: [nombre para el servicio]

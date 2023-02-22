@@ -63,8 +63,8 @@ pipeline {
       				script{
        	 				try{
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deployment.yaml --kubeconfig=/home/digesetuser/.kube/config'
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment aplicacion -n aplicacion --kubeconfig=/home/digesetuser/.kube/config' 
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment aplicacion -n aplicacion --kubeconfig=/home/digesetuser/.kube/config'
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment aplicacion -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment aplicacion -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
           				}catch(error)
        					{}
 					}

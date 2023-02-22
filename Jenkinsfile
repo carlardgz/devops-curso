@@ -3,7 +3,7 @@ pipeline {
 		dockerImageName1 = "carlarodriguezag/app:devops"
 		dockerImage1 = ""
 		dockerImageName1 = "carlarodriguezag/phpmyadmin:devops"
-		dockerImage1 = ""
+		dockerImage2 = ""
 	}
 
  	agent any

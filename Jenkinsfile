@@ -68,6 +68,26 @@ pipeline {
           				}catch(error)
        					{}
 					}
+
+					sh 'cd Phpmyadmin && scp -r -o StrictHostKeyChecking=no deployment.yaml digesetuser@148.213.1.131:/home/digesetuser/'
+      				script{
+       	 				try{
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deployment.yaml --kubeconfig=/home/digesetuser/.kube/config'
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment Phpmyadmin -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment Phpmyadmin -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
+          				}catch(error)
+       					{}
+					}
+
+					sh 'cd Mysql && scp -r -o StrictHostKeyChecking=no deployment.yaml digesetuser@148.213.1.131:/home/digesetuser/'
+      				script{
+       	 				try{
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deployment.yaml --kubeconfig=/home/digesetuser/.kube/config'
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment Mysql -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment Mysql -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
+          				}catch(error)
+       					{}
+					}
 				}
 		
 			}		

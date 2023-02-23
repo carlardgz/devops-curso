@@ -10,7 +10,7 @@ metadata:
   namespace: aplicacioncurso
 type: Opaque
 data:
-  ROOT_PASSWORD: mysecret
+  ROOT_PASSWORD: bWktY29udHJhc2XDsWEtZGVsLWN1cnNv
 
 ---
 apiVersion: apps/v1
@@ -46,7 +46,6 @@ spec:
                 secretKeyRef:
                   name: mysecret
                   key: ROOT_PASSWORD
-
 ---
 apiVersion: v1
 kind: Service

@@ -73,8 +73,8 @@ pipeline {
       				script{
        	 				try{
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deployment.yaml --kubeconfig=/home/digesetuser/.kube/config'
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment Phpmyadmin -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment Phpmyadmin -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment phpmyadmincursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment phpmyadmincursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
           				}catch(error)
        					{}
 					}
@@ -83,8 +83,8 @@ pipeline {
       				script{
        	 				try{
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deployment.yaml --kubeconfig=/home/digesetuser/.kube/config'
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment Mysql -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment Mysql -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment mysqlcursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment mysqlcursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
           				}catch(error)
        					{}
 					}

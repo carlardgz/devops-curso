@@ -61,7 +61,7 @@ pipeline {
 			 		sh 'cd aplicacion && scp -r -o StrictHostKeyChecking=no deployment.yaml digesetuser@148.213.1.131:/home/digesetuser/'
       				script{
        	 				try{
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deployment.yaml --kubeconfig=/home/digesetuser/.kube/config'
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deploymentcursoaplicacion.yaml --kubeconfig=/home/digesetuser/.kube/config'
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment aplicacion -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment aplicacion -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
           				}catch(error)
@@ -71,7 +71,7 @@ pipeline {
 					sh 'cd Phpmyadmin && scp -r -o StrictHostKeyChecking=no deployment.yaml digesetuser@148.213.1.131:/home/digesetuser/'
       				script{
        	 				try{
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deployment.yaml --kubeconfig=/home/digesetuser/.kube/config'
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deploymentcursoadmin.yaml --kubeconfig=/home/digesetuser/.kube/config'
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment phpmyadmincursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment phpmyadmincursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
           				}catch(error)
@@ -81,7 +81,7 @@ pipeline {
 					sh 'cd Mysql && scp -r -o StrictHostKeyChecking=no deployment.yaml digesetuser@148.213.1.131:/home/digesetuser/'
       				script{
        	 				try{
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deployment.yaml --kubeconfig=/home/digesetuser/.kube/config'
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deploymentcursomysql.yaml --kubeconfig=/home/digesetuser/.kube/config'
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment mysqlcursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment mysqlcursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
           				}catch(error)

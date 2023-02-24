@@ -58,7 +58,7 @@ pipeline {
 		stage('Correr POD') {
 		 	steps{
 		   		sshagent(['rodriguezssh']) {
-			 		sh 'cd aplicacion && scp -r -o StrictHostKeyChecking=no deployment.yaml digesetuser@148.213.1.131:/home/digesetuser/'
+			 		sh 'cd aplicacion && scp -r -o StrictHostKeyChecking=no deploymentcursoaplicacion.yaml digesetuser@148.213.1.131:/home/digesetuser/'
       				script{
        	 				try{
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deploymentcursoaplicacion.yaml --kubeconfig=/home/digesetuser/.kube/config'
@@ -68,7 +68,7 @@ pipeline {
        					{}
 					}
 
-					sh 'cd Phpmyadmin && scp -r -o StrictHostKeyChecking=no deployment.yaml digesetuser@148.213.1.131:/home/digesetuser/'
+					sh 'cd Phpmyadmin && scp -r -o StrictHostKeyChecking=no deploymentcursoadmin.yaml digesetuser@148.213.1.131:/home/digesetuser/'
       				script{
        	 				try{
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deploymentcursoadmin.yaml --kubeconfig=/home/digesetuser/.kube/config'
@@ -78,7 +78,7 @@ pipeline {
        					{}
 					}
 
-					sh 'cd Mysql && scp -r -o StrictHostKeyChecking=no deployment.yaml digesetuser@148.213.1.131:/home/digesetuser/'
+					sh 'cd Mysql && scp -r -o StrictHostKeyChecking=no deploymentcursomysql.yaml digesetuser@148.213.1.131:/home/digesetuser/'
       				script{
        	 				try{
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deploymentcursomysql.yaml --kubeconfig=/home/digesetuser/.kube/config'

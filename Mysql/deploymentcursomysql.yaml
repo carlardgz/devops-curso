@@ -7,7 +7,7 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysecret
+  name: mysqlsecretcurso
   namespace: aplicacioncurso
 type: Opaque
 data:
@@ -18,7 +18,7 @@ data:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: volumenmysql
+  name: mysqlvolumencurso
   namespace: aplicacioncurso
 spec:
   accessModes:
@@ -31,49 +31,49 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysqlcursodeploy
+  name: mysqlodeploymentcurso
   namespace: aplicacioncurso
   labels:
-    app: mysqlcursodeploy
+    app: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysqlcursodeploy
+      app: mysql
   template:
     metadata:
       labels:
-        app: mysqlcursodeploy
+        app: mysql
     spec:
       containers:
-        - name: mysqlcursodeploy
+        - name: mysqldeploymentcurso
           image: mysql:5.7
           ports:
             - containerPort: 3306
           volumeMounts:
             - mountPath: "/var/lib/mysql"
               subPath: "mysql"
-              name: volumenmysql
+              name: mysqlsecretcurso
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysecret
+                  name: mysqlsecretcurso
                   key: ROOT_PASSWORD
       volumes:
-        - name: volumenmysql
+        - name: mysqlvolumencurso
           persistentVolumeClaim:
-            claimName: volumenmysql
+            claimName: mysqlvolumencurso
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysqlcursoservice
+  name: mysqlservicecurso
   namespace: aplicacioncurso
 spec:
   selector:
-    app: mysqlcursoservice
+    app: mysql
   ports:
   - protocol: TCP
     port: 3306

@@ -6,7 +6,7 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysecret
+  name: secretcurso
   namespace: aplicacioncurso
 type: Opaque
 data:
@@ -16,46 +16,46 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin
+  name: phpmyadmindeploymentcurso
   namespace: aplicacioncurso
   labels:
-    app: admin
+    app: phpmyadmin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: admin
+      app: phpmyadmin
   template:
     metadata:
       labels:
-        app: admin
+        app: phpmyadmin
     spec:
       containers:
-        - name: admin
+        - name: phpmyadmindeploymentcurso
           image: carlarodriguezag/phpmyadmin:devops
           imagePullPolicy: Always
           ports:
             - containerPort: 80
           env:
             - name: PMA_HOST
-              value: mysqlcursoservice
+              value: mysqlservicecurso
             - name: PMA_PORT
               value: "3306"
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysecret
+                  name: mysqlsecretcurso
                   key: ROOT_PASSWORD
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: admin
+  name: phpmyadminservicecurso
   namespace: aplicacioncurso
 spec:
   type: ClusterIP
   selector:
-    app: admin
+    app: phpmyadmin
   ports:
   - protocol: TCP
     port: 80

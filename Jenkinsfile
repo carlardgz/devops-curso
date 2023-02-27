@@ -72,8 +72,8 @@ pipeline {
       				script{
        	 				try{
            					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl apply -f deploymentcursoadmin.yaml --kubeconfig=/home/digesetuser/.kube/config'
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment phpmyadmincursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
-           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment phpmyadmincursodeploy -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout restart deployment admin -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config' 
+           					sh 'ssh digesetuser@148.213.1.131 microk8s.kubectl rollout status deployment admin -n aplicacioncurso --kubeconfig=/home/digesetuser/.kube/config'
           				}catch(error)
        					{}
 					}

@@ -16,22 +16,22 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phpmyadmincursodeploy
+  name: admin
   namespace: aplicacioncurso
   labels:
-    app: phpmyadmincursodeploy
+    app: admin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: phpmyadmincursodeploy
+      app: admin
   template:
     metadata:
       labels:
-        app: phpmyadmincursodeploy
+        app: admin
     spec:
       containers:
-        - name: phpmyadmincursodeploy
+        - name: admin
           image: carlarodriguezag/phpmyadmin:devops
           imagePullPolicy: Always
           ports:
@@ -50,12 +50,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: phpmyadmincursoservice
+  name: admin
   namespace: aplicacioncurso
 spec:
   type: ClusterIP
   selector:
-    app: phpmyadmincursoservice
+    app: admin
   ports:
   - protocol: TCP
     port: 80

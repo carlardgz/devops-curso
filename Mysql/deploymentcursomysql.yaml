@@ -7,7 +7,7 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysqlsecretcurso
+  name: mysecret
   namespace: aplicacioncurso
 type: Opaque
 data:
@@ -53,12 +53,12 @@ spec:
           volumeMounts:
             - mountPath: "/var/lib/mysql"
               subPath: "mysql"
-              name: mysqlsecretcurso
+              name: mysecret
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysqlsecretcurso
+                  name: mysecret
                   key: ROOT_PASSWORD
       volumes:
         - name: mysqlvolumencurso

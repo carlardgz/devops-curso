@@ -6,7 +6,7 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: secretcurso
+  name: mysecret
   namespace: aplicacioncurso
 type: Opaque
 data:
@@ -44,7 +44,7 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysqlsecretcurso
+                  name: mysecret
                   key: ROOT_PASSWORD
 ---
 apiVersion: v1

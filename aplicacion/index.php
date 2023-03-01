@@ -1,3 +1,3 @@
 <?php
-echo "CURSO LOVEDEVOPS :) k"
+echo "CURSO LOVEDEVOPS :)"
 ?>

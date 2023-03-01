@@ -12,13 +12,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: aplicaciondeploymentcurso 
+      app: aplicacion
     replicas: 1
   template:
     metadata:
       labels:
-        app: aplicaciondeploymentcurso
-        role: aplicaciondeploymentcurso
+        app: aplicacion
+        role: aplicacion
     spec:
       containers:
         - name: aplicaciondeploymentcurso
@@ -35,10 +35,10 @@ metadata:
   name: aplicacionservicecurso
   namespace: aplicacioncurso
   labels:
-    app: aplicaciondeploymentcurso
+    app: aplicacion
 spec:
   selector:
-   app: aplicaciondeploymentcurso
+   app: aplicacion
   type: ClusterIP
   ports:
    - name: http
@@ -46,4 +46,4 @@ spec:
      protocol: TCP
      targetPort: 80
   selector:
-    role: aplicaciondeploymentcurso
+    role: aplicacion

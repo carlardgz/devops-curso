@@ -10,20 +10,15 @@ metadata:
   name: aplicaciondeploymentcurso
   namespace: aplicacioncurso
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: aplicacion 
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-        maxSurge: 0
-        maxUnavailable: 1
+      app: aplicaciondeploymentcurso 
+    replicas: 1
   template:
     metadata:
       labels:
-        app: aplicacion
-        role: aplicacion
+        app: aplicaciondeploymentcurso
+        role: aplicaciondeploymentcurso
     spec:
       containers:
         - name: aplicaciondeploymentcurso
@@ -31,7 +26,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
-              name: aplicacion
+              name: aplicaciondeploymentcurso
 
 ---
 apiVersion: v1
@@ -40,10 +35,10 @@ metadata:
   name: aplicacionservicecurso
   namespace: aplicacioncurso
   labels:
-    app: aplicacion
+    app: aplicaciondeploymentcurso
 spec:
   selector:
-   app: aplicacion
+   app: aplicaciondeploymentcurso
   type: ClusterIP
   ports:
    - name: http
@@ -51,4 +46,4 @@ spec:
      protocol: TCP
      targetPort: 80
   selector:
-    role: aplicacion
+    role: aplicaciondeploymentcurso

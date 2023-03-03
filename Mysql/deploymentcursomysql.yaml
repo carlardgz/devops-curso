@@ -2,11 +2,12 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: aplicacioncurso
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysqlvolumencurso
+  name: mysql-data-disk
   namespace: aplicacioncurso
 spec:
   accessModes:
@@ -14,20 +15,22 @@ spec:
   resources:
     requests:
       storage: 1Gi
+
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysecret
+  name: mysql-secrets
   namespace: aplicacioncurso
 type: Opaque
 data:
-  ROOT_PASSWORD: bWktY29udHJhc2XDsWEtZGVsLWN1cnNv
+  password: c3VwZXI=
+  
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysqldeploymentcurso
+  name: mysql-deployment
   namespace: aplicacioncurso
 spec:
   replicas: 1
@@ -40,36 +43,38 @@ spec:
         app: mysql
     spec:
       containers:
-        - name: mysqldeploymentcurso
+        - name: mysql
           image: mysql:latest
           env:
-            - name: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD  
               valueFrom:
                 secretKeyRef:
-                  name: mysecret
-                  key: ROOT_PASSWORD
+                  name: mysql-secrets
+                  key: password
           ports:
             - containerPort: 3306
               name: mysql
+          
           volumeMounts:
-            - name: mysqlvolumencurso 
-              mountPath: "/var/lib/mysql"  
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+
       volumes:
-        - name: mysqlvolumencurso
+        - name: mysql-data
           persistentVolumeClaim:
-            claimName: mysqlvolumencurso
+            claimName: mysql-data-disk
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysqlservicecurso
+  name: mysql-service
   namespace: aplicacioncurso
 spec:
   selector:
     app: mysql
   type: ClusterIP
   ports:
-  - name: mysql
-    port: 3306
-    targetPort: 3306
+    - name: mysql
+      port: 3306
+      targetPort: 3306

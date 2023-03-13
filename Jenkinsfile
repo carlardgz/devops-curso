@@ -92,14 +92,13 @@ pipeline {
 			}		
 		}
 	}
-}
 
- post{
-    success{
-        slackSend channel: 'carla', color: 'good', failOnError: true, message: "${custom_msg()}", teamDomain: 'universidadde-bea3869', tokenCredentialId: 'slackpass' 
+	post{
+        success{
+            slackSend channel: 'prueba_pipeline_haep', color: 'good', failOnError: true, message: "${custom_msg()}", teamDomain: 'universidadde-bea3869', tokenCredentialId: 'slackpass' 
 		}
-    }
-
+      }
+   }
   def custom_msg()
   {
   def JENKINS_URL= "jarvis.ucol.mx:8080"
@@ -107,4 +106,5 @@ pipeline {
   def BUILD_ID= env.BUILD_ID
   def JENKINS_LOG= " DEPLOY LOG: Job [${env.JOB_NAME}] Logs path: ${JENKINS_URL}/job/${JOB_NAME}/${BUILD_ID}/consoleText"
   return JENKINS_LOG
-  }
+}
+

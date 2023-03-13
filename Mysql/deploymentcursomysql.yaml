@@ -24,7 +24,7 @@ metadata:
   namespace: aplicacioncurso
 type: Opaque
 data:
-  password: c3VwZXI=
+  password: bXlzcWwtc2VjcmV0LXBhc3N3b3Jk
   
 ---
 apiVersion: apps/v1

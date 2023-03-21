@@ -4,6 +4,8 @@ pipeline {
 		dockerImage1 = ""
 		dockerImageName2 = "carlarodriguezag/phpmyadmin:devops"
 		dockerImage2 = ""
+		SONAR_SCANNER_HOME = "/opt/sonar-scanner"
+    	PATH = "${env.SONAR_SCANNER_HOME}/bin:${env.PATH}"
 	}
 
  	agent any
@@ -91,6 +93,22 @@ pipeline {
 		
 			}		
 		}
+
+		stage('Static Code Analysis') {
+      		steps {
+        		withSonarQubeEnv('sonarqube') {
+         		sh "${env.SONAR_SCANNER_HOME}/bin/sonar-scanner \
+					-Dsonar.projectKey=aplicacion \
+					-Dsonar.projectName=aplicacion \
+					-Dsonar.projectVersion=1.0 \
+					-Dsonar.sources=aplicacion \
+					-Dsonar.language=php \
+					-Dsonar.password=\$(sonarqubeGlobal) \
+					-Dsonar.host.url=http://scanner.ucol.mx:9000 \
+					-Dsonar.report.export.path=sonar-report.json"
+        		}
+      		}
+   		}
 	}
 
 	post{

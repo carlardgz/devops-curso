@@ -17,6 +17,21 @@ pipeline {
             }
 	 	}
 
+		stage('Static Code Analysis') {
+      		steps {
+        		withSonarQubeEnv('sonarqube') {
+         		sh "${env.SONAR_SCANNER_HOME}/bin/sonar-scanner \
+					-Dsonar.projectKey=aplicacion \
+					-Dsonar.projectName=aplicacion \
+					-Dsonar.projectVersion=1.0 \
+					-Dsonar.sources=aplicacion \
+					-Dsonar.language=php \
+					-Dsonar.password=\$(sonarqubeGlobal) \
+					-Dsonar.host.url=http://scanner.ucol.mx:9000 \
+					-Dsonar.report.export.path=sonar-report.json"
+        		}
+      		}
+   		}
 
 		stage('Construir Imagen') {
 	  		steps{
@@ -93,22 +108,6 @@ pipeline {
 		
 			}		
 		}
-
-		stage('Static Code Analysis') {
-      		steps {
-        		withSonarQubeEnv('sonarqube') {
-         		sh "${env.SONAR_SCANNER_HOME}/bin/sonar-scanner \
-					-Dsonar.projectKey=aplicacion \
-					-Dsonar.projectName=aplicacion \
-					-Dsonar.projectVersion=1.0 \
-					-Dsonar.sources=aplicacion \
-					-Dsonar.language=php \
-					-Dsonar.password=\$(sonarqubeGlobal) \
-					-Dsonar.host.url=http://scanner.ucol.mx:9000 \
-					-Dsonar.report.export.path=sonar-report.json"
-        		}
-      		}
-   		}
 	}
 
 	post{
